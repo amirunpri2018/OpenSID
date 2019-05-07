@@ -39,22 +39,33 @@ class Keuangan extends Admin_Controller {
 
   public function proses_impor()
   {
-      $nama = $_FILES['keuangan'];
-      if ($_POST['jenis_import'] == 'update')
-        if($_FILES['keuangan']['name'] !='')
-          $this->keuangan_model->extractUpdate($nama);
-      else
-        if($_FILES['keuangan']['name'] !='')
-          $this->keuangan_model->extract($nama);
+    $nama = $_FILES['keuangan'];
+    if ($_POST['jenis_import'] == 'update')
+    {
+      if($_FILES['keuangan']['name'] !='')
+      {
+        $this->keuangan_model->extractUpdate($nama);
+      }
+    }
+    else
+    {
+      if($_FILES['keuangan']['name'] !='')
+      {
+        $this->keuangan_model->extract($nama);
+      }
+    }
   }
 
   public function cekVersiDatabase()
   {
     $cek = $this->keuangan_model->cekMasterKeuangan($_POST['versi_database'],$_POST['tahun_anggaran']);
-    if ($cek)
+    if ($cek){
       echo json_encode($cek->id);
+    }
     else
+    {
       echo json_encode(0);
-
+    }
   }
+
 }
