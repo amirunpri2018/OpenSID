@@ -24,7 +24,7 @@
 		'19.02' => array('migrate' => 'nop', 'nextVersion' => '19.03'),
 		'19.03' => array('migrate' => 'migrasi_1903_ke_1904', 'nextVersion' => '19.04'),
 		'19.04' => array('migrate' => 'migrasi_1904_ke_1905', 'nextVersion' => '19.05'),
-		'19.04' => array('migrate' => 'migrasi_1905_ke_1906', 'nextVersion' => NULL),
+		'19.05' => array('migrate' => 'migrasi_1905_ke_1906', 'nextVersion' => NULL)
 	);
 
 	public function __construct()
@@ -115,15 +115,15 @@
 
   private function getCurrentVersion()
   {
-	// Untuk kasus tabel setting_aplikasi belum ada
-	if (!$this->db->table_exists('setting_aplikasi')) return NULL;
-	$result = NULL;
-	$_result = $this->db->where(array('key' => 'current_version'))->get('setting_aplikasi')->row();
-	if (!empty($_result))
-	{
-	  $result = $_result->value;
-	}
-	return $result;
+		// Untuk kasus tabel setting_aplikasi belum ada
+		if (!$this->db->table_exists('setting_aplikasi')) return NULL;
+		$result = NULL;
+		$_result = $this->db->where(array('key' => 'current_version'))->get('setting_aplikasi')->row();
+		if (!empty($_result))
+		{
+		  $result = $_result->value;
+		}
+		return $result;
   }
 
   private function nop()
@@ -181,9 +181,93 @@
 		$this->migrasi_1905_ke_1906();
   }
 
-	private function migrasi_1905_ke_1906()
+  private function migrasi_1905_ke_1906()
+  {
+  	// Tambah modul keuangan
+  	$this->modul_keuangan();
+
+  	// Tambah menu teks berjalan
+		$data = array(
+			'id' => '64',
+			'modul' => 'Teks Berjalan',
+			'url' => 'web/teks_berjalan',
+			'aktif' => '1',
+			'ikon' => 'fa-ellipsis-h',
+			'urut' => '9',
+			'level' => '2',
+			'parent' => '13',
+			'hidden' => '0',
+			'ikon_kecil' => 'fa-ellipsis-h'
+		);
+		$sql = $this->db->insert_string('setting_modul', $data) . " ON DUPLICATE KEY UPDATE url = VALUES(url), ikon = VALUES(ikon), ikon_kecil = VALUES(ikon_kecil)";
+		$this->db->query($sql);
+		$pilihan_sumber = $this->db->select('id')->where('key','isi_teks_berjalan')->get('setting_aplikasi')->row()->id;
+		if (!$pilihan_sumber)
+		{
+			$data = array(
+				'key' => 'isi_teks_berjalan',
+				'keterangan' => 'Isi Teks Berjalan di Web',
+				'jenis' => 'area',
+				'kategori' => 'web'
+			);
+			$this->db->insert('setting_aplikasi', $data);
+		}
+
+		$id_kategori = $this->db->select('id')->where('kategori', 'teks_berjalan')->limit(1)->get('kategori')->row()->id;
+		if ($id_kategori)
+		{
+			// Pindahkan teks berjalan di artikel ke setting teks_berjalan
+			$teks = $this->db->select('a.isi')
+				->from('artikel a')
+				->join('kategori k', 'a.id_kategori = k.id', 'left')
+				->where('k.kategori', 'teks_berjalan')
+				->where('k.enabled', 1)
+				->where('a.enabled', 1)
+				->get()->result_array();
+			$isi_teks = "";
+			foreach ($teks as $data)
+			{
+				$isi_teks .= strip_tags($data['isi']);
+			}
+			if (!empty($isi_teks))
+			{
+				$this->db->where('key', 'isi_teks_berjalan')->update('setting_aplikasi', array('value' => $isi_teks));
+			}
+			// Hapus artikel dan kategori teks berjalan
+			$this->db->where('id_kategori', $id_kategori)->delete('artikel');
+			$this->db->where('kategori', 'teks_berjalan')->delete('kategori');
+		}
+
+  	// Hapus menu SID dan Donasi
+		$this->db->where('id', 16)->delete('setting_modul');
+		$this->db->where('id', 19)->delete('setting_modul');
+
+  	$fields = $this->db->field_data('tweb_penduduk');
+  	$lookup = array_column($fields, NULL, 'name');   // re-index by 'name'
+  	$field_berat_lahir = $lookup['berat_lahir'];
+  	if (strtolower($field_berat_lahir->type) == 'varchar')
+  	{
+	  	// Ubah berat lahir dari kg menjadi gram
+	  	$list_penduduk = $this->db->select('id, berat_lahir')->get('tweb_penduduk')->result_array();
+	  	foreach ($list_penduduk as $penduduk)
+	  	{
+	  		// Kolom berat_lahir tersimpan sebagai varchar
+	  		$berat_lahir = (float)str_replace(',', '.', preg_replace('/[^0-9,\.]/','', $penduduk['berat_lahir']));
+	  		if ($berat_lahir < 100.0)
+	  		{
+	  			$berat_lahir = (int)($berat_lahir * 1000.0);
+	  			$this->db->where('id', $penduduk['id'])->update('tweb_penduduk', array('berat_lahir' => $berat_lahir));
+	  		}
+	  	}
+	  	// Ganti kolom berat_lahir menjadi bilangan
+		  $this->dbforge->modify_column('tweb_penduduk', array('berat_lahir' => array('type' => 'SMALLINT')));
+  	}
+  	// Di tweb_penduduk ubah kelahiran_anak_ke supaya default NULL
+	  $this->dbforge->modify_column('tweb_penduduk', array('kelahiran_anak_ke' => array('type' => 'TINYINT', 'constraint' => 2, 'default' => NULL)));
+  }
+
+	private function modul_keuangan()
 	{
-		$this->db->where('id', 62)->update('setting_modul', array('url'=>'gis/clear', 'aktif'=>'1'));
 		// Penambahan widget keuangan
 		$widget = $this->db->select('id, isi')->where('isi', 'keuangan.php')->get('widget')->row();
 		if (empty($widget))
@@ -1413,12 +1497,6 @@
 			ON DUPLICATE KEY UPDATE url = VALUES(url);
 	  ";
 	  $this->db->query($query);
-		// $this->data_siskeudes();
-		 // Buat folder desa/upload/keuangan apabila belum ada
-		 if (!file_exists(LOKASI_KEUANGAN_ZIP))
-		 {
-			 mkdir(LOKASI_KEUANGAN_ZIP, 0755);
-		 }
 	}
 
   private function migrasi_1903_ke_1904()
