@@ -722,6 +722,8 @@
     unset($data['file_foto']);
     unset($data['old_foto']);
 
+		$data['updated_at'] = date('Y-m-d H:i:s');
+		$data['updated_by'] = $this->session->user;
     $this->db->where('id', $id);
     $outp = $this->db->update('tweb_penduduk', $data);
 
@@ -773,6 +775,8 @@
 	public function update_status_dasar($id=0)
 	{
 		$data['status_dasar'] = $_POST['status_dasar'];
+		$data['updated_at'] = date('Y-m-d H:i:s');
+		$data['updated_by'] = $this->session->user;
 		$this->db->where('id',$id);
 		$this->db->update('tweb_penduduk', $data);
 		$penduduk = $this->get_penduduk($id);
@@ -809,6 +813,8 @@
 	{
 		$_SESSION['success'] = 1;
 		$data['status_dasar'] = 1; // status dasar hidup
+		$data['updated_at'] = date('Y-m-d H:i:s');
+		$data['updated_by'] = $this->session->user;
 		if (!$this->db->where('id', $id)->update('tweb_penduduk', $data))
 			$_SESSION['success'] = - 1;
 	}
