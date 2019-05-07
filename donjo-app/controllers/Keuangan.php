@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Keuangan extends Admin_Controller {
+
   public function __construct()
 	{
 		parent::__construct();
@@ -39,24 +40,21 @@ class Keuangan extends Admin_Controller {
   public function proses_impor()
   {
       $nama = $_FILES['keuangan'];
-      if ($_POST['jenis_import'] == 'update') {
-        if($_FILES['keuangan']['name'] !=''){
+      if ($_POST['jenis_import'] == 'update')
+        if($_FILES['keuangan']['name'] !='')
           $this->keuangan_model->extractUpdate($nama);
-        }
-      }else{
-        if($_FILES['keuangan']['name'] !=''){
+      else
+        if($_FILES['keuangan']['name'] !='')
           $this->keuangan_model->extract($nama);
-        }
-      }
   }
 
   public function cekVersiDatabase()
   {
     $cek = $this->keuangan_model->cekMasterKeuangan($_POST['versi_database'],$_POST['tahun_anggaran']);
-    if ($cek) {
+    if ($cek)
       echo json_encode($cek->id);
-    }else{
+    else
       echo json_encode(0);
-    }
+
   }
 }
