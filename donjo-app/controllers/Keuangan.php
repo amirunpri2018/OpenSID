@@ -58,7 +58,8 @@ class Keuangan extends Admin_Controller {
 
   public function cekVersiDatabase()
   {
-    $cek = $this->keuangan_model->cekMasterKeuangan($_POST['versi_database'],$_POST['tahun_anggaran']);
+    $nama = $_FILES['keuangan'];
+    $cek = $this->keuangan_model->cekMasterKeuangan($nama);
     if ($cek){
       echo json_encode($cek->id);
     }

@@ -1568,8 +1568,18 @@ class Keuangan_model extends CI_model {
 					if ($zip_file->open($full_path) === TRUE)
 					{
 							$zip_file->extractTo(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name']);
-							$data2['versi_database'] = $_POST['versi_database'];
-							$data2['tahun_anggaran'] = $_POST['tahun_anggaran'];
+							$csvVersi= fopen(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name'].'/'.'Ref_Version.csv', "r");
+							while (($datacsvVersi = fgetcsv($csvVersi)) !== FALSE)
+							{
+								$csvVersiData = $datacsvVersi;
+							}
+							$csvVersiAnggaran= fopen(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name'].'/'.'Ta_Anggaran.csv', "r");
+							while (($datacsvVersiAnggaran = fgetcsv($csvVersiAnggaran)) !== FALSE)
+							{
+								$dataVersiAnggaran = $datacsvVersiAnggaran;
+							}
+							$data2['versi_database'] = $csvVersiData[0];
+							$data2['tahun_anggaran'] = $dataVersiAnggaran[1];
 							$data2['aktif'] = 1;
 							if ($this->db->insert('keuangan_master', $data2))
 							{
@@ -1587,6 +1597,7 @@ class Keuangan_model extends CI_model {
 													$data_ref_desa['nama_desa'] = $value[2];
 													$this->db->insert('keuangan_ref_desa', $data_ref_desa);
 									}
+
 									$csvTaDesa= fopen(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name'].'/'.'Ta_Desa.csv', "r");
 							    while (($dataTaDesa = fgetcsv($csvTaDesa)) !== FALSE)
 									{
@@ -3118,11 +3129,37 @@ class Keuangan_model extends CI_model {
 		return $result->anggaranStlhPAK;
 	}
 
-	public function cekMasterKeuangan($versi_database,$tahun_anggaran)
+	public function cekMasterKeuangan($file)
 	{
+		$this->upload->initialize($this->uploadConfig);
+		$adaLampiran = !empty($_FILES['keuangan']['name']);
+		$versi_database = '';
+		$tahun_anggaran = '';
+		if ($this->upload->do_upload('keuangan'))
+		{
+			$data      = $this->upload->data();
+			$zip_file  = new ZipArchive;
+			$full_path = $data['full_path'];
+				if ($zip_file->open($full_path) === TRUE)
+				{
+						$zip_file->extractTo(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name']);
+						$csvVersi= fopen(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name'].'/'.'Ref_Version.csv', "r");
+						while (($datacsvVersi = fgetcsv($csvVersi)) !== FALSE)
+						{
+							$csvVersiData = $datacsvVersi;
+						}
+						$csvVersiAnggaran= fopen(LOKASI_KEUANGAN_ZIP.'/'.$_FILES['keuangan']['name'].'/'.'Ta_Anggaran.csv', "r");
+						while (($datacsvVersiAnggaran = fgetcsv($csvVersiAnggaran)) !== FALSE)
+						{
+							$dataVersiAnggaran = $datacsvVersiAnggaran;
+						}
+						$versi_database = $csvVersiData[0];
+						$tahun_anggaran = $dataVersiAnggaran[1];
+				}
+			$zip_file->close();
+		}
 		$this->db->where('keuangan_master.versi_database', $versi_database);
 		$this->db->where('keuangan_master.tahun_anggaran', $tahun_anggaran);
-		$this->db->where('keuangan_master.aktif', 1);
 		$result = $this->db->get('keuangan_master')->row();
 		return $result;
 	}
