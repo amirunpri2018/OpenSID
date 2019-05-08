@@ -59,7 +59,7 @@ class Keuangan extends Admin_Controller {
   public function cekVersiDatabase()
   {
     $nama = $_FILES['keuangan'];
-    $cek = $this->keuangan_model->cekMasterKeuangan($nama);
+    $cek = $this->keuangan_model->cek_master_keuangan($nama);
     if ($cek){
       echo json_encode($cek->id);
     }

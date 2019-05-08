@@ -290,11 +290,11 @@
 		";
 		$this->db->query($query);
 		$this->data_siskeudes();
-		 // Buat folder desa/upload/keuangan apabila belum ada
-		 if (!file_exists(LOKASI_KEUANGAN_ZIP))
-		 {
-			 mkdir(LOKASI_KEUANGAN_ZIP, 0755);
-		 }
+		// Buat folder desa/upload/keuangan apabila belum ada
+		if (!file_exists(LOKASI_KEUANGAN_ZIP))
+		{
+		 mkdir(LOKASI_KEUANGAN_ZIP, 0755);
+		}
 	}
 
 	private function data_siskeudes()
