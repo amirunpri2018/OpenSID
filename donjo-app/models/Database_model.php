@@ -285,7 +285,7 @@
 			INSERT INTO setting_modul (`id`, `modul`, `url`, `aktif`, `ikon`, `urut`, `level`, `parent`, `hidden`, `ikon_kecil`) VALUES
 			('201', 'Keuangan', 'keuangan', '1', 'fa-balance-scale', '6', '2', '0', '0', 'fa-balance-scale'),
 			('202', 'Impor Data', 'keuangan/import_data', '1', 'fa-cloud-upload', '6', '2', '201', '0', 'fa-cloud-upload'),
-			('203', 'Widget', 'widget/keuangan', '1', 'fa-bar-chart', '6', '2', '201', '0', 'fa-bar-chart')
+			('203', 'Widget', 'keuangan/widget', '1', 'fa-bar-chart', '6', '2', '201', '0', 'fa-bar-chart')
 			ON DUPLICATE KEY UPDATE url = VALUES(url);
 		";
 		$this->db->query($query);
