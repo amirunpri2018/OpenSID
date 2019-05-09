@@ -320,6 +320,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_bank_desa` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(50) NOT NULL,
 				`Kd_Desa` varchar(50) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
 				`NoRek_Bank` varchar(100) NOT NULL,
@@ -336,7 +337,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_bel_operasional` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`id_keg` int(11) NOT NULL,
+				`ID_Keg` int(11) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -349,22 +350,8 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_bidang` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_bid` varchar(50) NOT NULL,
-				`nama_bidang` varchar(250) NOT NULL,
-				PRIMARY KEY (`id`)
-			)";
-			$this->db->query($query);
-		}
-
-		//insert keuangan_ref_bel_operasional
-		if (!$this->db->table_exists('keuangan_ref_bel_operasional') )
-		{
-			$query = "
-			CREATE TABLE IF NOT EXISTS `keuangan_ref_bel_operasional` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`id_keuangan_master` int(11) NOT NULL,
-				`kd_bid` varchar(50) NOT NULL,
-				`nama_bidang` varchar(250) NOT NULL,
+				`Kd_Bid` varchar(50) NOT NULL,
+				`Nama_Bidang` varchar(250) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -391,9 +378,9 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_desa` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_kec` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`nama_desa` varchar(250) NOT NULL,
+				`Kd_Kec` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Nama_Desa` varchar(250) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -406,7 +393,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_kecamatan` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_kec` varchar(100) NOT NULL,
+				`Kd_Kec` varchar(100) NOT NULL,
 				`Nama_Kecamatan` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";

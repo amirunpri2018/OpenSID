@@ -1602,9 +1602,20 @@ class Keuangan_model extends CI_model {
   {
     $this->get_master_keuangan();
     $data_siskeudes = array(
+      'keuangan_ref_bank_desa' => 'Ref_Bank_Desa.csv',
+      'keuangan_ref_bel_operasional' => 'Ref_Bel_Operasional.csv',
+      'keuangan_ref_bidang' => 'Ref_Bidang.csv',
+      'keuangan_ref_bunga' => 'Ref_Bunga.csv',
+      'keuangan_ref_desa' => 'Ref_Desa.csv',
+      'keuangan_ref_kecamatan' => 'Ref_Kecamatan.csv',
       'keuangan_ref_kegiatan' => 'Ref_Kegiatan.csv',
-      'keuangan_ref_korolari' => 'Ref_Korolari.csv'
+      'keuangan_ref_korolari' => 'Ref_Korolari.csv',
+      'keuangan_ref_neraca_close' => 'Ref_NeracaClose.csv',
+      'keuangan_ref_perangkat' => 'Ref_Perangkat.csv',
+      'keuangan_ref_potongan' => 'Ref_Potongan.csv',
+      'keuangan_ref_rek1' => 'Ref_Rek1.csv'
     );
+    // print_r($data_siskeudes);die();
     // Impor data Siskeudes
     foreach ($data_siskeudes as $tabel_opensid => $file_siskeudes)
     {
@@ -3158,31 +3169,6 @@ class Keuangan_model extends CI_model {
       $_SESSION['error_msg'] = $uploadError;
       redirect('keuangan/import_data');
     }
-  }
-
-
-  public function anggaran_keuangan()
-  {
-    $this->db->select_sum('anggaran');
-    $this->db->where('keuangan_ta_rab.id_keuangan_master ', 1);
-    $result = $this->db->get('keuangan_ta_rab')->row();
-    return $result->anggaran;
-  }
-
-  public function anggaranPAK()
-  {
-    $this->db->select_sum('anggaranPAK');
-    $this->db->where('keuangan_ta_rab.id_keuangan_master ', 1);
-    $result = $this->db->get('keuangan_ta_rab')->row();
-    return $result->anggaranPAK;
-  }
-
-  public function anggaranStlhPAK()
-  {
-    $this->db->select_sum('anggaranStlhPAK');
-    $this->db->where('keuangan_ta_rab.id_keuangan_master ', 1);
-    $result = $this->db->get('keuangan_ta_rab')->row();
-    return $result->anggaranStlhPAK;
   }
 
   public function cek_master_keuangan($file)

@@ -13,11 +13,6 @@ class Keuangan extends Admin_Controller {
 
   public function widget()
   {
-    $data['tahun_anggaran'] = $this->keuangan_model->tahun_anggaran();
-    $data['anggaran_keuangan'] = $this->keuangan_model->anggaran_keuangan();
-    $data['anggaranPAK'] = $this->keuangan_model->anggaranPAK();
-    $data['anggaranStlhPAK'] = $this->keuangan_model->anggaranStlhPAK();
-    $data['data_grafik'] = $this->keuangan_model->data_grafik();
     $header = $this->header_model->get_data();
     $nav['act_sub'] = 203;
     $this->load->view('header', $header);
@@ -57,7 +52,7 @@ class Keuangan extends Admin_Controller {
     redirect('keuangan/import_data');
   }
 
-  public function cekVersiDatabase()
+  public function cek_versi_database()
   {
     $nama = $_FILES['keuangan'];
     $cek = $this->keuangan_model->cek_master_keuangan($nama);

@@ -87,7 +87,7 @@
 		{
 			$.ajax(
 			{
-				url: '<?= site_url("keuangan/cekVersiDatabase")?>',
+				url: '<?= site_url("keuangan/cek_versi_database")?>',
 				type: "POST",
 				datatype:"json",
 				// data: $('#validasi').serialize(),
