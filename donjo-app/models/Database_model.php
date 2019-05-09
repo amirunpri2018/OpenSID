@@ -526,10 +526,10 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ref_rek4` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`jenis` varchar(100) NOT NULL,
-				`obyek` varchar(100) NOT NULL,
-				`nama_obyek` varchar(100) NOT NULL,
-				`peraturan` varchar(250) NOT NULL,
+				`Jenis` varchar(100) NOT NULL,
+				`Obyek` varchar(100) NOT NULL,
+				`Nama_Obyek` varchar(100) NOT NULL,
+				`Peraturan` varchar(250) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -575,17 +575,19 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_anggaran` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`KdPosting` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`KURincianSD` varchar(100) NOT NULL,
 				`KD_Rincian` varchar(100) NOT NULL,
 				`RincianSD` varchar(100) NOT NULL,
-				`anggaran` varchar(100) NOT NULL,
-				`anggaranPAK` varchar(100) NOT NULL,
-				`anggaranStlhPAK` varchar(100) NOT NULL,
+				`Anggaran` varchar(100) NOT NULL,
+				`AnggaranPAK` varchar(100) NOT NULL,
+				`AnggaranStlhPAK` varchar(100) NOT NULL,
 				`Belanja` varchar(100) NOT NULL,
 				`Kd_keg` varchar(100) NOT NULL,
 				`SumberDana` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`tgl_posting` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`TglPosting` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -603,7 +605,6 @@
 				`Kd_Desa` varchar(100) NOT NULL,
 				`No_Perdes` varchar(100) NOT NULL,
 				`TglPosting` varchar(100) NOT NULL,
-				`anggaranStlhPAK` varchar(100) NOT NULL,
 				`UserID` int(11) NOT NULL,
 				`Kunci` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
@@ -647,6 +648,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_bidang` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Bid` varchar(100) NOT NULL,
 				`Nama_Bidang` varchar(100) NOT NULL,
@@ -662,26 +664,27 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_desa` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`nm_kades` varchar(100) NOT NULL,
-				`jbt_kades` varchar(100) NOT NULL,
-				`nm_sekdes` varchar(100) NOT NULL,
-				`nip_sekdes` varchar(100) NOT NULL,
-				`jbt_sekdes` varchar(100) NOT NULL,
-				`nm_kaur_keu` varchar(100) NOT NULL,
-				`jbt_kaur_keu` varchar(100) NOT NULL,
-				`nm_bendahara` varchar(100) NOT NULL,
-				`jbt_bendahara` varchar(100) NOT NULL,
-				`no_perdes` varchar(100) NOT NULL,
-				`tgl_perdes` varchar(100) NOT NULL,
-				`no_perdes_pb` varchar(100) NOT NULL,
-				`tgl_perdes_pb` varchar(100) NOT NULL,
-				`no_predes_pj` varchar(100) NOT NULL,
-				`tgl_perdes_pj` varchar(100) NOT NULL,
-				`alamat` varchar(250) NOT NULL,
-				`ibukota` varchar(100) NOT NULL,
-				`status` varchar(100) NOT NULL,
-				`npwp` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Nm_Kades` varchar(100) NOT NULL,
+				`Jbt_Kades` varchar(100) NOT NULL,
+				`Nm_Sekdes` varchar(100) NOT NULL,
+				`NIP_Sekdes` varchar(100) NOT NULL,
+				`Jbt_Sekdes` varchar(100) NOT NULL,
+				`Nm_Kaur_Keu` varchar(100) NOT NULL,
+				`Jbt_Kaur_Keu` varchar(100) NOT NULL,
+				`Nm_Bendahara` varchar(100) NOT NULL,
+				`Jbt_Bendahara` varchar(100) NOT NULL,
+				`No_Perdes` varchar(100) NOT NULL,
+				`Tgl_Perdes` varchar(100) NOT NULL,
+				`No_Perdes_PB` varchar(100) NOT NULL,
+				`Tgl_Perdes_PB` varchar(100) NOT NULL,
+				`No_Perdes_PJ` varchar(100) NOT NULL,
+				`Tgl_Perdes_PJ` varchar(100) NOT NULL,
+				`Alamat` varchar(250) NOT NULL,
+				`Ibukota` varchar(100) NOT NULL,
+				`Status` varchar(100) NOT NULL,
+				`NPWP` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -694,6 +697,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_jurnal_umum` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`KdBuku` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Tanggal` varchar(100) NOT NULL,
@@ -717,7 +721,9 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_jurnal_umum_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`NoBukti` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
 				`RincianSD` varchar(100) NOT NULL,
 				`NoID` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
@@ -739,6 +745,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_kegiatan` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Bid` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
@@ -764,16 +771,17 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_mutasi` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`tgl_bukti` varchar(100) NOT NULL,
-				`keterangan` varchar(100) NOT NULL,
-				`kd_bank` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`sumberdana` varchar(100) NOT NULL,
-				`kd_mutasi` varchar(100) NOT NULL,
-				`nilai` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Tgl_Bukti` varchar(100) NOT NULL,
+				`Keterangan` varchar(100) NOT NULL,
+				`Kd_Bank` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`Sumberdana` varchar(100) NOT NULL,
+				`Kd_Mutasi` varchar(100) NOT NULL,
+				`Nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -786,10 +794,11 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_pajak` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`No_SSP` varchar(100) NOT NULL,
 				`Tgl_SSP` varchar(100) NOT NULL,
-				`keterangan` varchar(100) NOT NULL,
+				`Keterangan` varchar(100) NOT NULL,
 				`Nama_WP` varchar(100) NOT NULL,
 				`Alamat_WP` varchar(100) NOT NULL,
 				`NPWP` varchar(100) NOT NULL,
@@ -811,6 +820,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_pajak_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`No_SSP` varchar(100) NOT NULL,
 				`No_Bukti` varchar(100) NOT NULL,
@@ -828,6 +838,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_pemda` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Prov` varchar(100) NOT NULL,
 				`Kd_Kab` varchar(100) NOT NULL,
 				`Nama_Pemda` varchar(100) NOT NULL,
@@ -852,14 +863,15 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_pencairan` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`no_cek` varchar(100) NOT NULL,
-				`no_spp` varchar(100) NOT NULL,
-				`tgl_cek` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`keterangan` varchar(100) NOT NULL,
-				`jumlah` varchar(100) NOT NULL,
-				`potongan` varchar(100) NOT NULL,
-				`kdbayar` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`No_Cek` varchar(100) NOT NULL,
+				`No_SPP` varchar(100) NOT NULL,
+				`Tgl_Cek` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Keterangan` varchar(100) NOT NULL,
+				`Jumlah` varchar(100) NOT NULL,
+				`Potongan` varchar(100) NOT NULL,
+				`KdBayar` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -872,6 +884,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_perangkat` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Jabatan` varchar(100) NOT NULL,
 				`No_ID` varchar(100) NOT NULL,
@@ -892,12 +905,13 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_rab` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`anggaran` varchar(100) NOT NULL,
-				`anggaranPAK` varchar(100) NOT NULL,
-				`anggaranStlhPAK` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`Anggaran` varchar(100) NOT NULL,
+				`AnggaranPAK` varchar(100) NOT NULL,
+				`AnggaranStlhPAK` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -910,6 +924,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_rab_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
@@ -938,6 +953,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_rab_sub` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
@@ -1123,6 +1139,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_saldo_awal` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
 				`Jenis` varchar(100) NOT NULL,
@@ -1142,6 +1159,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spj` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`No_SPJ` varchar(100) NOT NULL,
 				`Tgl_SPJ` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
@@ -1162,12 +1180,13 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spjpot` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`no_spj` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`nilai` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`No_SPJ` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`Nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1180,6 +1199,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spj_bukti` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`No_SPJ` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
@@ -1206,6 +1226,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spj_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`No_SPJ` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
 				`Kd_Rincian` varchar(100) NOT NULL,
@@ -1228,16 +1249,17 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spj_sisa` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`tgl_bukti` varchar(100) NOT NULL,
-				`no_spj` varchar(100) NOT NULL,
-				`tgl_spj` varchar(100) NOT NULL,
-				`no_spp` varchar(100) NOT NULL,
-				`tgl_spp` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`keterangan` varchar(100) NOT NULL,
-				`nilai` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Tgl_Bukti` varchar(100) NOT NULL,
+				`No_SPJ` varchar(100) NOT NULL,
+				`Tgl_SPJ` varchar(100) NOT NULL,
+				`No_SPP` varchar(100) NOT NULL,
+				`Tgl_SPP` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`Keterangan` varchar(100) NOT NULL,
+				`Nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1250,6 +1272,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spp` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`No_SPP` varchar(100) NOT NULL,
 				`Tgl_SPP` varchar(100) NOT NULL,
 				`Jn_SPP` varchar(100) NOT NULL,
@@ -1270,6 +1293,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spp_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`No_SPP` varchar(100) NOT NULL,
 				`Kd_Keg` varchar(100) NOT NULL,
@@ -1288,20 +1312,21 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_sppbukti` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`no_spp` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`sumberdana` varchar(100) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`tgl_bukti` varchar(100) NOT NULL,
-				`nm_penerima` varchar(100) NOT NULL,
-				`alamat` varchar(100) NOT NULL,
-				`rek_bank` varchar(100) NOT NULL,
-				`nm_bank` varchar(100) NOT NULL,
-				`npwp` varchar(100) NOT NULL,
-				`keterangan` varchar(100) NOT NULL,
-				`nilai` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`No_SPP` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`Sumberdana` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Tgl_Bukti` varchar(100) NOT NULL,
+				`Nm_Penerima` varchar(100) NOT NULL,
+				`Alamat` varchar(100) NOT NULL,
+				`Rek_Bank` varchar(100) NOT NULL,
+				`Nm_Bank` varchar(100) NOT NULL,
+				`NPWP` varchar(100) NOT NULL,
+				`Keterangan` varchar(100) NOT NULL,
+				`Nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1314,12 +1339,13 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_spppot` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`no_spp` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`nilai` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`No_SPP` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`Nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1332,15 +1358,16 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_sts` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`tgl_bukti` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`uraian` varchar(100) NOT NULL,
-				`no_rek_bank` varchar(100) NOT NULL,
-				`nama_bank` varchar(100) NOT NULL,
-				`jumlah` varchar(100) NOT NULL,
-				`nm_bendahara` varchar(100) NOT NULL,
-				`jbt_bendahara` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Tgl_Bukti` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Uraian` varchar(100) NOT NULL,
+				`NoRek_Bank` varchar(100) NOT NULL,
+				`Nama_Bank` varchar(100) NOT NULL,
+				`Jumlah` varchar(100) NOT NULL,
+				`Nm_Bendahara` varchar(100) NOT NULL,
+				`Jbt_Bendahara` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1353,6 +1380,7 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_sts_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
 				`Kd_Desa` varchar(100) NOT NULL,
 				`No_Bukti` varchar(100) NOT NULL,
 				`No_TBP` varchar(100) NOT NULL,
@@ -1370,21 +1398,22 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_tbp` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`tgl_bukti` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`uraian` varchar(100) NOT NULL,
-				`nm_penyetor` varchar(100) NOT NULL,
-				`alamat_penyetor` varchar(100) NOT NULL,
-				`ttd_penyetor` varchar(100) NOT NULL,
-				`norek_bank` varchar(100) NOT NULL,
-				`nama_bank` varchar(100) NOT NULL,
-				`jumlah` varchar(100) NOT NULL,
-				`nm_bendahara` varchar(100) NOT NULL,
-				`jbt_bendahara` varchar(100) NOT NULL,
-				`status` varchar(100) NOT NULL,
-				`kdbayar` varchar(100) NOT NULL,
-				`ref_bayar` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Tgl_Bukti` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Uraian` varchar(100) NOT NULL,
+				`Nm_Penyetor` varchar(100) NOT NULL,
+				`Alamat_Penyetor` varchar(100) NOT NULL,
+				`TTD_Penyetor` varchar(100) NOT NULL,
+				`NoRek_Bank` varchar(100) NOT NULL,
+				`Nama_Bank` varchar(100) NOT NULL,
+				`Jumlah` varchar(100) NOT NULL,
+				`Nm_Bendahara` varchar(100) NOT NULL,
+				`Jbt_Bendahara` varchar(100) NOT NULL,
+				`Status` varchar(100) NOT NULL,
+				`KdBayar` varchar(100) NOT NULL,
+				`Ref_Bayar` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
 			$this->db->query($query);
@@ -1397,12 +1426,13 @@
 			CREATE TABLE IF NOT EXISTS `keuangan_ta_tbp_rinci` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`id_keuangan_master` int(11) NOT NULL,
-				`no_bukti` varchar(100) NOT NULL,
-				`kd_desa` varchar(100) NOT NULL,
-				`kd_keg` varchar(100) NOT NULL,
-				`kd_rincian` varchar(100) NOT NULL,
-				`rincian_sd` varchar(100) NOT NULL,
-				`sumber_dana` varchar(100) NOT NULL,
+				`Tahun` varchar(100) NOT NULL,
+				`No_Bukti` varchar(100) NOT NULL,
+				`Kd_Desa` varchar(100) NOT NULL,
+				`Kd_Keg` varchar(100) NOT NULL,
+				`Kd_Rincian` varchar(100) NOT NULL,
+				`RincianSD` varchar(100) NOT NULL,
+				`SumberDana` varchar(100) NOT NULL,
 				`nilai` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`)
 			)";
