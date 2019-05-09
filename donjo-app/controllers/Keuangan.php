@@ -54,6 +54,7 @@ class Keuangan extends Admin_Controller {
         $this->keuangan_model->extract($nama);
       }
     }
+    redirect('keuangan/import_data');
   }
 
   public function cekVersiDatabase()

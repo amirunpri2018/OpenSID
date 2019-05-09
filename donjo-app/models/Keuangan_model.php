@@ -2,6 +2,7 @@
 class Keuangan_model extends CI_model {
 
   private $zip_dir = '';
+  private $id_master_keuangan;
 
   public function __construct()
   {
@@ -1558,7 +1559,60 @@ class Keuangan_model extends CI_model {
       }
   }
 
-  public function extract($path)
+  // $file = full path ke file yg akan diproses
+  private function extract_file($file)
+  {
+    $csv = fopen($file, "r");
+    $header = fgetcsv($csv); // baris berisi nama kolom
+    $data = array(); // array untuk diisi semua baris
+    while (($row = fgetcsv($csv)) !== FALSE)
+    {
+      $baris = array();
+      $baris['id_keuangan_master'] = $this->id_master_keuangan;
+      foreach($row as $key => $value)
+      {
+        $baris[$header[$key]] = $value; // $baris['nama-kolom'] = isi-kolom
+      }
+      $data[] = $baris;
+    }
+    fclose($csv);
+    return $data;
+  }
+
+  private function get_master_keuangan()
+  {
+    $this->zip_dir = LOKASI_KEUANGAN_ZIP.pathinfo($_FILES['keuangan']['name'], PATHINFO_FILENAME);
+
+    $csv_versi = fopen($this->zip_dir.'/'.'Ref_Version.csv', "r");
+    fgetcsv($csv_versi); // abaikan baris header
+    $data_versi = fgetcsv($csv_versi);
+    $csv_anggaran= fopen($this->zip_dir.'/'.'Ta_Anggaran.csv', "r");
+    fgetcsv($csv_anggaran); // abaikan baris header
+    $data_anggaran = fgetcsv($csv_anggaran); // baris pertama
+    $data_master = array(
+      'versi_database' => $data_versi[0],
+      'tahun_anggaran' => $data_anggaran[1],
+      'aktif' => 1
+    );
+    $this->db->insert('keuangan_master', $data_master);
+    $this->id_master_keuangan = $this->db->insert_id();
+  }
+
+  public function extract()
+  {
+    $this->get_master_keuangan();
+    $data_siskeudes = array(
+      'keuangan_ref_kegiatan' => 'Ref_Kegiatan.csv',
+      'keuangan_ref_korolari' => 'Ref_Korolari.csv'
+    );
+    // Impor data Siskeudes
+    foreach ($data_siskeudes as $tabel_opensid => $file_siskeudes)
+    {
+      $this->db->insert_batch($tabel_opensid, $this->extract_file($this->zip_dir.'/'.$file_siskeudes));
+    }
+  }
+
+  public function extract_lama($path)
   {
     $this->upload->initialize($this->uploadConfig);
     $adaLampiran = !empty($_FILES['keuangan']['name']);
