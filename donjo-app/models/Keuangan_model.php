@@ -134,6 +134,7 @@ class Keuangan_model extends CI_model {
       if (!empty($data_tabel_siskeudes))
       {
         $this->db->insert_batch($tabel_opensid, $data_tabel_siskeudes);
+        $_SESSION['success'] = 1;
       }
     }
   }
@@ -205,9 +206,11 @@ class Keuangan_model extends CI_model {
     foreach ($data_siskeudes as $tabel_opensid => $file_siskeudes)
     {
       $data_tabel_siskeudes = $this->extract_file($this->zip_dir.'/'.$file_siskeudes);
+
       if (!empty($data_tabel_siskeudes))
       {
-        $this->db->update_batch($tabel_opensid, $data_tabel_siskeudes);
+        $this->db->update_batch($tabel_opensid, $data_tabel_siskeudes,'id_keuangan_master');
+        $_SESSION['success'] = 1;
       }
     }
   }
